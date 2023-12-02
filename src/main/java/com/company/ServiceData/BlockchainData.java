@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import static com.company.config.PropertiesUtils.getProperty;
 import static java.lang.String.format;
 
 public class BlockchainData {
@@ -114,8 +115,7 @@ public class BlockchainData {
                     new DSAPublicKeyImpl(transaction.getFrom())) < transaction.getValue() && !blockReward) {
                 throw new GeneralSecurityException("Not enough funds by sender to record transaction");
             } else {
-                Connection connection = DriverManager.getConnection
-                        ("jdbc:sqlite:C:\\Users\\mycod\\IdeaProjects\\e-coin\\db\\blockchain.db");
+                Connection connection = DriverManager.getConnection(getProperty("db.url.blockchain"));
 
                 PreparedStatement pstmt;
                 pstmt = connection.prepareStatement("INSERT INTO TRANSACTIONS" +
@@ -141,8 +141,7 @@ public class BlockchainData {
 
     public void loadBlockChain() {
         try {
-            Connection connection = DriverManager.getConnection
-                    ("jdbc:sqlite:C:\\Users\\mycod\\IdeaProjects\\e-coin\\db\\blockchain.db");
+            Connection connection = DriverManager.getConnection(getProperty("db.url.blockchain"));
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(" SELECT * FROM BLOCKCHAIN ");
             while (resultSet.next()) {
@@ -179,8 +178,7 @@ public class BlockchainData {
     private ArrayList<Transaction> loadTransactionLedger(Integer ledgerID) throws SQLException {
         ArrayList<Transaction> transactions = new ArrayList<>();
         try {
-            Connection connection = DriverManager.getConnection
-                    ("jdbc:sqlite:C:\\Users\\mycod\\IdeaProjects\\e-coin\\db\\blockchain.db");
+            Connection connection = DriverManager.getConnection(getProperty("db.url.blockchain"));
             PreparedStatement stmt = connection.prepareStatement
                     (" SELECT  * FROM TRANSACTIONS WHERE LEDGER_ID = ?");
             stmt.setInt(1, ledgerID);
@@ -236,8 +234,7 @@ public class BlockchainData {
 
     private void addBlock(Block block) {
         try {
-            Connection connection = DriverManager.getConnection
-                    ("jdbc:sqlite:C:\\Users\\mycod\\IdeaProjects\\e-coin\\db\\blockchain.db");
+            Connection connection = DriverManager.getConnection(getProperty("db.url.blockchain"));
             PreparedStatement pstmt;
             pstmt = connection.prepareStatement
                     ("INSERT INTO BLOCKCHAIN(PREVIOUS_HASH, CURRENT_HASH, LEDGER_ID, CREATED_ON," +
@@ -260,8 +257,7 @@ public class BlockchainData {
 
     private void replaceBlockchainInDatabase(LinkedList<Block> receivedBC) {
         try {
-            Connection connection = DriverManager.getConnection
-                    ("jdbc:sqlite:C:\\Users\\mycod\\IdeaProjects\\e-coin\\db\\blockchain.db");
+            Connection connection = DriverManager.getConnection(getProperty("db.url.blockchain"));
             Statement clearDBStatement = connection.createStatement();
             clearDBStatement.executeUpdate(" DELETE FROM BLOCKCHAIN ");
             clearDBStatement.executeUpdate(" DELETE FROM TRANSACTIONS ");
