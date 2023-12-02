@@ -7,7 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sun.security.provider.DSAPublicKeyImpl;
 
-import java.security.*;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.Signature;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
+
+import static java.lang.String.format;
 
 public class BlockchainData {
 
@@ -50,6 +55,7 @@ public class BlockchainData {
     }
 
     Comparator<Transaction> transactionComparator = Comparator.comparing(Transaction::getTimestamp);
+
     public ObservableList<Transaction> getTransactionLedgerFX() {
         newBlockTransactionsFX.clear();
         newBlockTransactions.sort(transactionComparator);
@@ -86,7 +92,7 @@ public class BlockchainData {
     private void verifyBlockChain(LinkedList<Block> currentBlockChain) throws GeneralSecurityException {
         for (Block block : currentBlockChain) {
             if (!block.isVerified(signing)) {
-                throw new GeneralSecurityException("Block validation failed");
+                throw new GeneralSecurityException(format("Block validation failed: %s", block));
             }
             ArrayList<Transaction> transactions = block.getTransactionLedger();
             for (Transaction transaction : transactions) {
@@ -96,6 +102,7 @@ public class BlockchainData {
             }
         }
     }
+
     public void addTransactionState(Transaction transaction) {
         newBlockTransactions.add(transaction);
         newBlockTransactions.sort(transactionComparator);
@@ -309,7 +316,7 @@ public class BlockchainData {
 
     private void updateTransactionLedgers(LinkedList<Block> receivedBC) throws GeneralSecurityException {
         for (Transaction transaction : receivedBC.getLast().getTransactionLedger()) {
-            if (!getCurrentBlockChain().getLast().getTransactionLedger().contains(transaction) ) {
+            if (!getCurrentBlockChain().getLast().getTransactionLedger().contains(transaction)) {
                 getCurrentBlockChain().getLast().getTransactionLedger().add(transaction);
                 System.out.println("current ledger id = " + getCurrentBlockChain().getLast().getLedgerId() + " transaction id = " + transaction.getLedgerId());
                 addTransaction(transaction, false);
@@ -317,7 +324,7 @@ public class BlockchainData {
         }
         getCurrentBlockChain().getLast().getTransactionLedger().sort(transactionComparator);
         for (Transaction transaction : getCurrentBlockChain().getLast().getTransactionLedger()) {
-            if (!receivedBC.getLast().getTransactionLedger().contains(transaction) ) {
+            if (!receivedBC.getLast().getTransactionLedger().contains(transaction)) {
                 receivedBC.getLast().getTransactionLedger().add(transaction);
             }
         }
@@ -425,9 +432,13 @@ public class BlockchainData {
         this.currentBlockChain = currentBlockChain;
     }
 
-    public static int getTimeoutInterval() { return TIMEOUT_INTERVAL; }
+    public static int getTimeoutInterval() {
+        return TIMEOUT_INTERVAL;
+    }
 
-    public static int getMiningInterval() { return MINING_INTERVAL; }
+    public static int getMiningInterval() {
+        return MINING_INTERVAL;
+    }
 
     public int getMiningPoints() {
         return miningPoints;

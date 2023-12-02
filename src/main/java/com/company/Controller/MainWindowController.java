@@ -58,7 +58,7 @@ public class MainWindowController {
         Dialog<ButtonType> newTransactionController = new Dialog<>();
         newTransactionController.initOwner(borderPane.getScene().getWindow());
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("../View/AddNewTransactionWindow.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("../../../view/AddNewTransactionWindow.fxml"));
         try {
             newTransactionController.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
