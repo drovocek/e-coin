@@ -1,14 +1,12 @@
 package com.company.config;
 
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
+import java.util.Properties;
 
 public final class PropertiesUtils {
 
-    private static final Map<String, Object> PROPERTIES;
+    private static final Properties PROPERTIES;
 
     static {
         try {
@@ -28,12 +26,13 @@ public final class PropertiesUtils {
         throw new UnsupportedOperationException();
     }
 
-    private static Map<String, Object> loadProperties() throws IOException {
-        Yaml yaml = new Yaml();
+    private static Properties loadProperties() throws IOException {
         InputStream inputStream = PropertiesUtils.class
                 .getClassLoader()
-                .getResourceAsStream("application.yaml");
-        return yaml.load(inputStream);
+                .getResourceAsStream("application.properties");
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        return properties;
     }
 
     public static <T> T getProperty(String key) {
