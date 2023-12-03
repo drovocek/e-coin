@@ -122,7 +122,7 @@ public class BlockchainData {
     public void addTransaction(Transaction transaction, boolean blockReward) throws GeneralSecurityException {
         try {
             if (getBalance(currentBlockChain, newBlockTransactions,
-                    KeyUtil.generateDsaKey(transaction.getFrom())) < transaction.getValue() && !blockReward) {
+                    KeyUtil.generateDsaPublicKey(transaction.getFrom())) < transaction.getValue() && !blockReward) {
                 throw new GeneralSecurityException("Not enough funds by sender to record transaction");
             } else {
                 Connection connection = DriverManager.getConnection(PropertiesUtils.getProperty("db.url.blockchain"));

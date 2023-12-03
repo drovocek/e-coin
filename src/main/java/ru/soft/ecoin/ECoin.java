@@ -1,5 +1,9 @@
 package ru.soft.ecoin;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import ru.soft.ecoin.model.Block;
 import ru.soft.ecoin.model.Transaction;
 import ru.soft.ecoin.model.Wallet;
@@ -9,14 +13,16 @@ import ru.soft.ecoin.threads.MiningThread;
 import ru.soft.ecoin.threads.PeerClient;
 import ru.soft.ecoin.threads.PeerServer;
 import ru.soft.ecoin.threads.UI;
-import javafx.application.Application;
-import javafx.stage.Stage;
-import lombok.extern.slf4j.Slf4j;
-import ru.soft.ecoin.util.PropertiesUtils;
 
-import java.security.*;
-import java.sql.*;
+import java.security.Signature;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDateTime;
+
+import static java.sql.DriverManager.getConnection;
+import static ru.soft.ecoin.util.PropertiesUtils.getProperty;
 
 @Slf4j
 public class ECoin extends Application {
@@ -68,12 +74,16 @@ public class ECoin extends Application {
 
     @Override
     public void init() {
-        try {
-            //This creates your wallet if there is none and gives you a KeyPair.
-            //We will create it in separate db for better security and ease of portability.
-            Connection walletConnection = DriverManager
-                    .getConnection(PropertiesUtils.getProperty("db.url.wallet"));
-            Statement walletStatement = walletConnection.createStatement();
+        loadWallet();
+        loadBlockchain();
+    }
+
+    //This creates your wallet if there is none and gives you a KeyPair.
+    //We will create it in separate db for better security and ease of portability.
+    @SneakyThrows
+    private static void loadWallet() {
+        try (Connection walletConnection = getConnection(getProperty("db.url.wallet"));
+             Statement walletStatement = walletConnection.createStatement()) {
             walletStatement.executeUpdate(WALLET_CREATE_TABLE);
             ResultSet resultSet = walletStatement.executeQuery(WALLET_GET_ALL);
             if (!resultSet.next()) {
@@ -85,15 +95,15 @@ public class ECoin extends Application {
                 pstmt.setBytes(2, pubBlob);
                 pstmt.executeUpdate();
             }
-            resultSet.close();
-            walletStatement.close();
-            walletConnection.close();
             WalletData.getInstance().loadWallet();
+        }
+    }
 
-//          This will create the db tables with columns for the Blockchain.
-            Connection blockchainConnection = DriverManager
-                    .getConnection(PropertiesUtils.getProperty("db.url.blockchain"));
-            Statement blockchainStmt = blockchainConnection.createStatement();
+    //This will create the db tables with columns for the Blockchain.
+    @SneakyThrows
+    private static void loadBlockchain() {
+        try (Connection blockchainConnection = getConnection(getProperty("db.url.blockchain"));
+             Statement blockchainStmt = blockchainConnection.createStatement();) {
             blockchainStmt.executeUpdate(BLOCKCHAIN_CREATE_TABLE);
             ResultSet resultSetBlockchain = blockchainStmt.executeQuery(BLOCKCHAIN_GET_ALL);
             Transaction initBlockRewardTransaction = null;
@@ -125,14 +135,8 @@ public class ECoin extends Application {
                 BlockchainData.getInstance().addTransaction(initBlockRewardTransaction, true);
                 BlockchainData.getInstance().addTransactionState(initBlockRewardTransaction);
             }
-            blockchainStmt.close();
-            blockchainConnection.close();
-        } catch (SQLException | NoSuchAlgorithmException | InvalidKeyException | SignatureException e) {
-            log.error("db failed: {}", e.getMessage());
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
+            BlockchainData.getInstance().loadBlockChain();
         }
-        BlockchainData.getInstance().loadBlockChain();
     }
 }
 

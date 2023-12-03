@@ -24,7 +24,7 @@ public class AddNewTransactionController {
         log.info("create new transaction");
         Base64.Decoder decoder = Base64.getDecoder();
         Signature signing = Signature.getInstance("SHA256withDSA");
-        Integer ledgerId = BlockchainData.getInstance().getTransactionLedgerFX().get(0).getLedgerId();
+        Integer ledgerId = BlockchainData.getInstance().getTransactionLedgerFX().getFirst().getLedgerId();
         byte[] sendB = decoder.decode(toAddress.getText());
         Transaction transaction = new Transaction(WalletData.getInstance()
                 .getWallet(),sendB ,Integer.parseInt(value.getText()), ledgerId, signing);

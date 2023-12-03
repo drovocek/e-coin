@@ -10,7 +10,7 @@ import java.security.SignatureException;
 import java.util.Arrays;
 import java.util.Base64;
 
-import static ru.soft.ecoin.util.KeyUtil.generateDsaKey;
+import static ru.soft.ecoin.util.KeyUtil.generateDsaPublicKey;
 import static java.time.LocalDateTime.now;
 
 @Getter
@@ -69,7 +69,7 @@ public class Transaction implements Serializable {
 
     public Boolean isVerified(Signature signing)
             throws InvalidKeyException, SignatureException {
-        signing.initVerify(generateDsaKey(this.getFrom()));
+        signing.initVerify(generateDsaPublicKey(this.getFrom()));
         signing.update(this.toString().getBytes());
         return signing.verify(this.signature);
     }

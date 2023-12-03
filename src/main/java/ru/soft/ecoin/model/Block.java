@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import static ru.soft.ecoin.util.KeyUtil.generateDsaKey;
+import static ru.soft.ecoin.util.KeyUtil.generateDsaPublicKey;
 
 @Getter
 @Setter
@@ -45,7 +45,7 @@ public class Block implements Serializable {
 
     public Boolean isVerified(Signature signing)
             throws InvalidKeyException, SignatureException {
-        signing.initVerify(generateDsaKey(this.minedBy));
+        signing.initVerify(generateDsaPublicKey(this.minedBy));
         signing.update(this.toString().getBytes());
         return signing.verify(this.currHash);
     }
