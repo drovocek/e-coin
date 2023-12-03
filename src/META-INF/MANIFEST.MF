@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.company.ecoin.ECoin
+Main-Class: ru.soft.ecoin.ECoin
 

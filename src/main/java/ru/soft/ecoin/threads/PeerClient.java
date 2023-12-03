@@ -1,7 +1,7 @@
-package com.company.ecoin.threads;
+package ru.soft.ecoin.threads;
 
-import com.company.ecoin.model.Block;
-import com.company.ecoin.serviceData.BlockchainData;
+import ru.soft.ecoin.model.Block;
+import ru.soft.ecoin.serviceData.BlockchainData;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import static com.company.ecoin.util.PropertiesUtils.getProperty;
+import static ru.soft.ecoin.util.PropertiesUtils.getProperty;
 import static java.util.Arrays.stream;
 
 @Slf4j

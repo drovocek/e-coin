@@ -1,4 +1,4 @@
-package com.company.ecoin.model;
+package ru.soft.ecoin.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import java.security.SignatureException;
 import java.util.Arrays;
 import java.util.Base64;
 
-import static com.company.ecoin.util.KeyUtil.generateDsaKey;
+import static ru.soft.ecoin.util.KeyUtil.generateDsaKey;
 import static java.time.LocalDateTime.now;
 
 @Getter

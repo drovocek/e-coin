@@ -1,4 +1,4 @@
-package com.company.ecoin.threads;
+package ru.soft.ecoin.threads;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

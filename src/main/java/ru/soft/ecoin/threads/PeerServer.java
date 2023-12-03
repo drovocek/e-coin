@@ -1,4 +1,4 @@
-package com.company.ecoin.threads;
+package ru.soft.ecoin.threads;
 
 import java.io.IOException;
 import java.net.ServerSocket;

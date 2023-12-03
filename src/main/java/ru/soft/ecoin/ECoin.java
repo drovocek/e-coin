@@ -1,23 +1,22 @@
-package com.company.ecoin;
+package ru.soft.ecoin;
 
-import com.company.ecoin.model.Block;
-import com.company.ecoin.model.Transaction;
-import com.company.ecoin.model.Wallet;
-import com.company.ecoin.serviceData.BlockchainData;
-import com.company.ecoin.serviceData.WalletData;
-import com.company.ecoin.threads.MiningThread;
-import com.company.ecoin.threads.PeerClient;
-import com.company.ecoin.threads.PeerServer;
-import com.company.ecoin.threads.UI;
+import ru.soft.ecoin.model.Block;
+import ru.soft.ecoin.model.Transaction;
+import ru.soft.ecoin.model.Wallet;
+import ru.soft.ecoin.serviceData.BlockchainData;
+import ru.soft.ecoin.serviceData.WalletData;
+import ru.soft.ecoin.threads.MiningThread;
+import ru.soft.ecoin.threads.PeerClient;
+import ru.soft.ecoin.threads.PeerServer;
+import ru.soft.ecoin.threads.UI;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import ru.soft.ecoin.util.PropertiesUtils;
 
 import java.security.*;
 import java.sql.*;
 import java.time.LocalDateTime;
-
-import static com.company.ecoin.util.PropertiesUtils.getProperty;
 
 @Slf4j
 public class ECoin extends Application {
@@ -73,7 +72,7 @@ public class ECoin extends Application {
             //This creates your wallet if there is none and gives you a KeyPair.
             //We will create it in separate db for better security and ease of portability.
             Connection walletConnection = DriverManager
-                    .getConnection(getProperty("db.url.wallet"));
+                    .getConnection(PropertiesUtils.getProperty("db.url.wallet"));
             Statement walletStatement = walletConnection.createStatement();
             walletStatement.executeUpdate(WALLET_CREATE_TABLE);
             ResultSet resultSet = walletStatement.executeQuery(WALLET_GET_ALL);
@@ -93,7 +92,7 @@ public class ECoin extends Application {
 
 //          This will create the db tables with columns for the Blockchain.
             Connection blockchainConnection = DriverManager
-                    .getConnection(getProperty("db.url.blockchain"));
+                    .getConnection(PropertiesUtils.getProperty("db.url.blockchain"));
             Statement blockchainStmt = blockchainConnection.createStatement();
             blockchainStmt.executeUpdate(BLOCKCHAIN_CREATE_TABLE);
             ResultSet resultSetBlockchain = blockchainStmt.executeQuery(BLOCKCHAIN_GET_ALL);

@@ -1,8 +1,8 @@
-package com.company.ecoin.threads;
+package ru.soft.ecoin.threads;
 
 import lombok.extern.slf4j.Slf4j;
 
-import static com.company.ecoin.serviceData.BlockchainData.*;
+import static ru.soft.ecoin.serviceData.BlockchainData.*;
 import static java.lang.String.valueOf;
 import static java.time.LocalDateTime.now;
 import static java.time.LocalDateTime.parse;

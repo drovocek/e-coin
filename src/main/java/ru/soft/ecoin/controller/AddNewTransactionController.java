@@ -1,8 +1,9 @@
-package com.company.ecoin.controller;
+package ru.soft.ecoin.controller;
 
-import com.company.ecoin.model.Transaction;
-import com.company.ecoin.serviceData.BlockchainData;
-import com.company.ecoin.serviceData.WalletData;
+import lombok.extern.slf4j.Slf4j;
+import ru.soft.ecoin.model.Transaction;
+import ru.soft.ecoin.serviceData.BlockchainData;
+import ru.soft.ecoin.serviceData.WalletData;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -10,6 +11,7 @@ import java.security.GeneralSecurityException;
 import java.security.Signature;
 import java.util.Base64;
 
+@Slf4j
 public class AddNewTransactionController {
 
     @FXML
@@ -19,6 +21,7 @@ public class AddNewTransactionController {
 
     @FXML
     public void createNewTransaction() throws GeneralSecurityException {
+        log.info("create new transaction");
         Base64.Decoder decoder = Base64.getDecoder();
         Signature signing = Signature.getInstance("SHA256withDSA");
         Integer ledgerId = BlockchainData.getInstance().getTransactionLedgerFX().get(0).getLedgerId();
@@ -27,5 +30,6 @@ public class AddNewTransactionController {
                 .getWallet(),sendB ,Integer.parseInt(value.getText()), ledgerId, signing);
         BlockchainData.getInstance().addTransaction(transaction,false);
         BlockchainData.getInstance().addTransactionState(transaction);
+        log.info("success create transaction");
     }
 }

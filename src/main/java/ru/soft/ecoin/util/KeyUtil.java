@@ -1,4 +1,4 @@
-package com.company.ecoin.util;
+package ru.soft.ecoin.util;
 
 import lombok.SneakyThrows;
 

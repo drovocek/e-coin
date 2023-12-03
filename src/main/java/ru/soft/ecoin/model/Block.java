@@ -1,4 +1,4 @@
-package com.company.ecoin.model;
+package ru.soft.ecoin.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import static com.company.ecoin.util.KeyUtil.generateDsaKey;
+import static ru.soft.ecoin.util.KeyUtil.generateDsaKey;
 
 @Getter
 @Setter

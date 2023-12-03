@@ -1,8 +1,8 @@
-package com.company.ecoin.threads;
+package ru.soft.ecoin.threads;
 
 
-import com.company.ecoin.model.Block;
-import com.company.ecoin.serviceData.BlockchainData;
+import ru.soft.ecoin.model.Block;
+import ru.soft.ecoin.serviceData.BlockchainData;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

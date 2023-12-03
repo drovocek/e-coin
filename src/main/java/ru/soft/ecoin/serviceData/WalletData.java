@@ -1,6 +1,7 @@
-package com.company.ecoin.serviceData;
+package ru.soft.ecoin.serviceData;
 
-import com.company.ecoin.model.Wallet;
+import ru.soft.ecoin.model.Wallet;
+import ru.soft.ecoin.util.PropertiesUtils;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -10,8 +11,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.sql.*;
-
-import static com.company.ecoin.util.PropertiesUtils.getProperty;
 
 public class WalletData {
 
@@ -28,7 +27,7 @@ public class WalletData {
 
     //This will load your wallet from the database.
     public void loadWallet() throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
-        Connection walletConnection = DriverManager.getConnection(getProperty("db.url.wallet"));
+        Connection walletConnection = DriverManager.getConnection(PropertiesUtils.getProperty("db.url.wallet"));
         Statement walletStatment = walletConnection.createStatement();
         ResultSet resultSet;
         resultSet = walletStatment.executeQuery(" SELECT * FROM WALLET ");
