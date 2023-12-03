@@ -1,9 +1,8 @@
-package com.company.model;
+package com.company.ecoin.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import sun.security.provider.DSAPublicKeyImpl;
 
 import java.io.Serializable;
 import java.security.InvalidKeyException;
@@ -12,6 +11,8 @@ import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+
+import static com.company.ecoin.util.KeyUtil.generateDsaKey;
 
 @Getter
 @Setter
@@ -44,7 +45,7 @@ public class Block implements Serializable {
 
     public Boolean isVerified(Signature signing)
             throws InvalidKeyException, SignatureException {
-        signing.initVerify(new DSAPublicKeyImpl(this.minedBy));
+        signing.initVerify(generateDsaKey(this.minedBy));
         signing.update(this.toString().getBytes());
         return signing.verify(this.currHash);
     }

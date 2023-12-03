@@ -1,8 +1,7 @@
-package com.company.model;
+package com.company.ecoin.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import sun.security.provider.DSAPublicKeyImpl;
 
 import java.io.Serializable;
 import java.security.InvalidKeyException;
@@ -11,6 +10,7 @@ import java.security.SignatureException;
 import java.util.Arrays;
 import java.util.Base64;
 
+import static com.company.ecoin.util.KeyUtil.generateDsaKey;
 import static java.time.LocalDateTime.now;
 
 @Getter
@@ -69,7 +69,7 @@ public class Transaction implements Serializable {
 
     public Boolean isVerified(Signature signing)
             throws InvalidKeyException, SignatureException {
-        signing.initVerify(new DSAPublicKeyImpl(this.getFrom()));
+        signing.initVerify(generateDsaKey(this.getFrom()));
         signing.update(this.toString().getBytes());
         return signing.verify(this.signature);
     }

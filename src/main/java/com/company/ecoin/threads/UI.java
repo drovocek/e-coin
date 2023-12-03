@@ -1,4 +1,4 @@
-package com.company.threads;
+package com.company.ecoin.threads;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,8 @@ public class UI extends Application {
     public void start(Stage stage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("../../../view/MainWindow.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("MainWindow.fxml"));
+            root = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }

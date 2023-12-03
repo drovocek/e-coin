@@ -1,15 +1,14 @@
-package com.company.threads;
+package com.company.ecoin.threads;
 
 
-import com.company.model.Block;
-import com.company.serviceData.BlockchainData;
+import com.company.ecoin.model.Block;
+import com.company.ecoin.serviceData.BlockchainData;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
-
 
 public class PeerRequestThread extends Thread {
 
@@ -22,7 +21,6 @@ public class PeerRequestThread extends Thread {
     @Override
     public void run() {
         try {
-
             ObjectOutputStream objectOutput = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream objectInput = new ObjectInputStream(socket.getInputStream());
 

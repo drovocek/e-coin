@@ -1,4 +1,4 @@
-package com.company.config;
+package com.company.ecoin.util;
 
 import java.io.IOException;
 import java.io.InputStream;

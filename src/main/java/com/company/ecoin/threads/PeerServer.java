@@ -1,9 +1,7 @@
-package com.company.threads;
-
+package com.company.ecoin.threads;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-
 
 public class PeerServer extends Thread {
 

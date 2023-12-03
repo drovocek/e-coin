@@ -1,6 +1,6 @@
-package com.company.serviceData;
+package com.company.ecoin.serviceData;
 
-import com.company.model.Wallet;
+import com.company.ecoin.model.Wallet;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -11,20 +11,19 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.sql.*;
 
-import static com.company.config.PropertiesUtils.getProperty;
+import static com.company.ecoin.util.PropertiesUtils.getProperty;
 
 public class WalletData {
 
     private Wallet wallet;
-    //singleton class
-    private static WalletData instance;
+    private static final WalletData INSTANCE;
 
     static {
-        instance = new WalletData();
+        INSTANCE = new WalletData();
     }
 
-    public static WalletData getInstance() {
-        return instance;
+    public static WalletData getInstance(){
+        return INSTANCE;
     }
 
     //This will load your wallet from the database.

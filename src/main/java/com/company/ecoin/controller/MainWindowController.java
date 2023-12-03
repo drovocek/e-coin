@@ -1,8 +1,9 @@
-package com.company.controller;
+package com.company.ecoin.controller;
 
-import com.company.model.Transaction;
-import com.company.serviceData.BlockchainData;
-import com.company.serviceData.WalletData;
+import com.company.ecoin.model.Transaction;
+import com.company.ecoin.serviceData.BlockchainData;
+import com.company.ecoin.serviceData.WalletData;
+import com.company.ecoin.threads.UI;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,9 +57,8 @@ public class MainWindowController {
     @FXML
     public void toNewTransactionController() {
         Dialog<ButtonType> newTransactionController = new Dialog<>();
-        newTransactionController.initOwner(borderPane.getScene().getWindow());
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("../../../view/AddNewTransactionWindow.fxml"));
+        newTransactionController.initOwner(borderPane.getScene().getWindow());;
+        FXMLLoader fxmlLoader = new FXMLLoader(UI.class.getResource("AddNewTransactionWindow.fxml"));
         try {
             newTransactionController.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {

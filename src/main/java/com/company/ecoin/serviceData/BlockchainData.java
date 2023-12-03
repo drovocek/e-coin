@@ -1,11 +1,12 @@
-package com.company.serviceData;
+package com.company.ecoin.serviceData;
 
-import com.company.model.Block;
-import com.company.model.Transaction;
-import com.company.model.Wallet;
+import com.company.ecoin.model.Block;
+import com.company.ecoin.model.Transaction;
+import com.company.ecoin.model.Wallet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sun.security.provider.DSAPublicKeyImpl;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
@@ -19,40 +20,49 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import static com.company.config.PropertiesUtils.getProperty;
+import static com.company.ecoin.util.PropertiesUtils.getProperty;
+import static com.company.ecoin.util.KeyUtil.generateDsaKey;
 import static java.lang.String.format;
 
 public class BlockchainData {
 
-    private ObservableList<Transaction> newBlockTransactionsFX;
-    private ObservableList<Transaction> newBlockTransactions;
-    private LinkedList<Block> currentBlockChain = new LinkedList<>();
+    //helper class.
+    private final Signature signing;
+    private final ObservableList<Transaction> newBlockTransactionsFX;
+    private final ObservableList<Transaction> newBlockTransactions;
+    @Setter
+    @Getter
+    private LinkedList<Block> currentBlockChain;
     private Block latestBlock;
+    @Setter
+    @Getter
     private boolean exit = false;
+    @Setter
+    @Getter
     private int miningPoints;
     private static final int TIMEOUT_INTERVAL = 65;
     private static final int MINING_INTERVAL = 60;
-    //helper class.
-    private Signature signing = Signature.getInstance("SHA256withDSA");
 
     //singleton class
-    private static BlockchainData instance;
+    private static final BlockchainData INSTANCE;
 
     static {
         try {
-            instance = new BlockchainData();
+            INSTANCE = new BlockchainData();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public BlockchainData() throws NoSuchAlgorithmException {
-        newBlockTransactions = FXCollections.observableArrayList();
-        newBlockTransactionsFX = FXCollections.observableArrayList();
+    public static BlockchainData getInstance() {
+        return INSTANCE;
     }
 
-    public static BlockchainData getInstance() {
-        return instance;
+    private BlockchainData() throws NoSuchAlgorithmException {
+        signing = Signature.getInstance("SHA256withDSA");
+        newBlockTransactions = FXCollections.observableArrayList();
+        newBlockTransactionsFX = FXCollections.observableArrayList();
+        currentBlockChain = new LinkedList<>();
     }
 
     Comparator<Transaction> transactionComparator = Comparator.comparing(Transaction::getTimestamp);
@@ -112,7 +122,7 @@ public class BlockchainData {
     public void addTransaction(Transaction transaction, boolean blockReward) throws GeneralSecurityException {
         try {
             if (getBalance(currentBlockChain, newBlockTransactions,
-                    new DSAPublicKeyImpl(transaction.getFrom())) < transaction.getValue() && !blockReward) {
+                    generateDsaKey(transaction.getFrom())) < transaction.getValue() && !blockReward) {
                 throw new GeneralSecurityException("Not enough funds by sender to record transaction");
             } else {
                 Connection connection = DriverManager.getConnection(getProperty("db.url.blockchain"));
@@ -420,14 +430,6 @@ public class BlockchainData {
         return null;
     }
 
-    public LinkedList<Block> getCurrentBlockChain() {
-        return currentBlockChain;
-    }
-
-    public void setCurrentBlockChain(LinkedList<Block> currentBlockChain) {
-        this.currentBlockChain = currentBlockChain;
-    }
-
     public static int getTimeoutInterval() {
         return TIMEOUT_INTERVAL;
     }
@@ -436,19 +438,4 @@ public class BlockchainData {
         return MINING_INTERVAL;
     }
 
-    public int getMiningPoints() {
-        return miningPoints;
-    }
-
-    public void setMiningPoints(int miningPoints) {
-        this.miningPoints = miningPoints;
-    }
-
-    public boolean isExit() {
-        return exit;
-    }
-
-    public void setExit(boolean exit) {
-        this.exit = exit;
-    }
 }

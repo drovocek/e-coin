@@ -1,4 +1,4 @@
-package com.company.model;
+package com.company.ecoin.model;
 
 import lombok.Getter;
 
