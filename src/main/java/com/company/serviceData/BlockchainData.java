@@ -1,8 +1,8 @@
-package com.company.ServiceData;
+package com.company.serviceData;
 
-import com.company.Model.Block;
-import com.company.Model.Transaction;
-import com.company.Model.Wallet;
+import com.company.model.Block;
+import com.company.model.Transaction;
+import com.company.model.Wallet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sun.security.provider.DSAPublicKeyImpl;

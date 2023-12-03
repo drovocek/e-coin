@@ -1,14 +1,14 @@
 package com.company;
 
-import com.company.Model.Block;
-import com.company.Model.Transaction;
-import com.company.Model.Wallet;
-import com.company.ServiceData.BlockchainData;
-import com.company.ServiceData.WalletData;
-import com.company.Threads.MiningThread;
-import com.company.Threads.PeerClient;
-import com.company.Threads.PeerServer;
-import com.company.Threads.UI;
+import com.company.model.Block;
+import com.company.model.Transaction;
+import com.company.model.Wallet;
+import com.company.serviceData.BlockchainData;
+import com.company.serviceData.WalletData;
+import com.company.threads.MiningThread;
+import com.company.threads.PeerClient;
+import com.company.threads.PeerServer;
+import com.company.threads.UI;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -1,4 +1,4 @@
-package com.company.Threads;
+package com.company.threads;
 
 
 import java.io.IOException;

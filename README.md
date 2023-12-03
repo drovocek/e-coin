@@ -12,5 +12,7 @@ If you want to run multiple peers:
 For More info check out [Chapter 7 of Introducing Blockchain with Java: Program, Implement, and Extend Blockchains with Java 1st ed. Edition](https://www.amazon.com/Introducing-Blockchain-Java-Implement-Blockchains/dp/1484279263/ref=sr_1_1?qid=1637096107&refinements=p_27%3ASpiro+Buzharovski&s=books&sr=1-1&text=Spiro+Buzharovski)
 
 ### Docs:
+
 [- Сертификаты](https://learn.microsoft.com/ru-ru/windows/win32/seccrypto/digital-certificates)
+
 [- Signature](https://www.baeldung.com/java-digital-signature)

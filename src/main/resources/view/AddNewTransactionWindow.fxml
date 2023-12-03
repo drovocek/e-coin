@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane prefHeight="266.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.Controller.AddNewTransactionController">
+<DialogPane prefHeight="266.0" prefWidth="667.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.controller.AddNewTransactionController">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="657.0">
             <children>

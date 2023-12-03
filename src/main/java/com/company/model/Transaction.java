@@ -1,4 +1,4 @@
-package com.company.Model;
+package com.company.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.Signature;
 import java.security.SignatureException;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Base64;
 

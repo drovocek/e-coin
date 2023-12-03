@@ -1,8 +1,8 @@
-package com.company.Controller;
+package com.company.controller;
 
-import com.company.Model.Transaction;
-import com.company.ServiceData.BlockchainData;
-import com.company.ServiceData.WalletData;
+import com.company.model.Transaction;
+import com.company.serviceData.BlockchainData;
+import com.company.serviceData.WalletData;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 

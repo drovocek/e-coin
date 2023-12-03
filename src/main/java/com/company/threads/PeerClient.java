@@ -1,7 +1,7 @@
-package com.company.Threads;
+package com.company.threads;
 
-import com.company.Model.Block;
-import com.company.ServiceData.BlockchainData;
+import com.company.model.Block;
+import com.company.serviceData.BlockchainData;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
